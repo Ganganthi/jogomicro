@@ -1,0 +1,6 @@
+SWX = cima
+SWX = baixo
+SWX = esquerda
+SWX = direita
+
+

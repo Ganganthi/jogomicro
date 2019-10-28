@@ -12,5 +12,6 @@
 int main(void)
 {
     start();
+    while(1);
 	return 0;
 }

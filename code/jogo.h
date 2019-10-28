@@ -31,8 +31,6 @@ void configButtons();
 
 void MUXButtons();
 
-void setClk();
-
 void printTelainicio();
 
 void printInstrucoes();

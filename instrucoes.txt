@@ -3,4 +3,28 @@ SWX = baixo
 SWX = esquerda
 SWX = direita
 
+Damas é um jogo de dois jogadores e cada jogador possui 12 pedras. 
+O objetivo é capturar ou imobilizar as pedras do adversário.
+Todas as peças se movem diagonalmente.
+Uma pedra anda somente para frente, uma casa de cada vez. 
+Quando a pedra atinge o lado oposto do tabuleiro, ela é promovida à dama.
+A dama anda para frente e para trás, quantas casas quiser, mas não pode saltar uma pedra da mesma cor.
+A captura é obrigatória, não existe sopro.
+Duas ou mais peças juntas, na mesma diagonal, não podem ser capturadas.
+Pedra captura dama e dama captura pedra.
+A pedra e a dama podem capturar tanto para a frente quanto para trás. 
+Se no mesmo lance a pedra ou dama estiver em posição de capturar outra peça, ela deverá o fazer.
+Se um jogador ficar sem movimentos possíveis, ele perde.
+Após 20 rodadas sem capturas, declara-se empate.
 
+Para fazer sua jogada, selecione uma de suas pedras ou damas e selecione a casa na qual deseja se mover.
+
+
+
+struct pedra
+
+bool player
+int posx
+int posy
+bool dama
+bool jogada		// saber se a jogada é nova ou nao

@@ -8,6 +8,7 @@
 #include "global.h"
 #include "bitmaps.h"
 
+#include "inc/hw_uart.h"
 #include "inc/hw_types.h"
 #include "inc/hw_memmap.h"
 #include "driverlib/sysctl.h"
@@ -17,26 +18,41 @@
 #include "driverlib/systick.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/timer.h"
+#include "driverlib/uart.h"
+
+typedef struct pedra
+{
+	uint8_t x;
+	uint8_t y;
+	uint8_t player;
+	bool dama;
+	bool life;
+
+}pedra_s;
 
 
 void start();
 
-void habPerifericos();
+static void habPerifericos();
 
-void habInt();
+static void habInt();
 
-void configTimer();
+static void configTimer();
 
-void configButtons();
+static void configButtons();
 
-void MUXButtons();
+static void limpaMatriz();
 
-void printTelainicio();
+static void MUXButtons();
 
-void printInstrucoes();
+static void printTelainicio();
 
-void trataMenu();
+static void printInstrucoes();
 
-void trataTimer0A();
+void trataGPIOF();
+
+void trataSysTick();
+
+
 
 #endif

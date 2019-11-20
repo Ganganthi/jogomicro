@@ -1,0 +1,396 @@
+******************************************************************************
+                  TI ARM Linker Unix v18.12.3                  
+******************************************************************************
+>> Linked Tue Nov 19 16:46:38 2019
+
+OUTPUT FILE NAME:   <Jogo.out>
+ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 000018b5
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  FLASH                 00000000   00040000  000024cd  0003db33  R  X
+  SRAM                  20000000   00008000  00000675  0000798b  RW X
+
+
+SEGMENT ALLOCATION MAP
+
+run origin  load origin   length   init length attrs members
+----------  ----------- ---------- ----------- ----- -------
+00000000    00000000    000024d4   000024d4    r-x
+  00000000    00000000    0000026c   0000026c    r-- .intvecs
+  0000026c    0000026c    000017e0   000017e0    r-x .text
+  00001a4c    00001a4c    00000a5d   00000a5d    r-- .const
+  000024b0    000024b0    00000024   00000024    r-- .cinit
+20000000    20000000    00000678   00000000    rw-
+  20000000    20000000    0000026c   00000000    rw- .vtable
+  2000026c    2000026c    00000209   00000000    rw- .bss
+  20000478    20000478    00000200   00000000    rw- .stack
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.intvecs   0    00000000    0000026c     
+                  00000000    0000026c     tm4c1231h6pm_startup_ccs.obj (.intvecs)
+
+.text      0    0000026c    000017e0     
+                  0000026c    00000c24     Nokia5110.obj (.text)
+                  00000e90    00000488     jogo.obj (.text)
+                  00001318    00000132     driverlib.lib : gpio.obj (.text:GPIOPadConfigSet)
+                  0000144a    00000002     --HOLE-- [fill = 0]
+                  0000144c    00000110                   : sysctl.obj (.text:SysCtlClockGet)
+                  0000155c    000000f4                   : sysctl.obj (.text:SysCtlClockSet)
+                  00001650    0000007a     rtsv7M4_T_le_v4SPD16_eabi.lib : memset_t2.asm.obj (.text)
+                  000016ca    00000002     --HOLE-- [fill = 0]
+                  000016cc    00000068     driverlib.lib : interrupt.obj (.text:IntEnable)
+                  00001734    00000056                   : gpio.obj (.text:GPIOIntTypeSet)
+                  0000178a    00000002     --HOLE-- [fill = 0]
+                  0000178c    00000044                   : gpio.obj (.text:_GPIOIntNumberGet)
+                  000017d0    00000044     rtsv7M4_T_le_v4SPD16_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit:__TI_auto_init_nobinit_nopinit)
+                  00001814    00000038     driverlib.lib : sysctl.obj (.text:SysCtlPeripheralReady)
+                  0000184c    00000034                   : interrupt.obj (.text:IntRegister)
+                  00001880    00000034                   : sysctl.obj (.text:SysCtlPeripheralEnable)
+                  000018b4    00000034     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noargs:_c_int00_noargs)
+                  000018e8    0000002a     driverlib.lib : gpio.obj (.text:GPIODirModeSet)
+                  00001912    00000002     --HOLE-- [fill = 0]
+                  00001914    0000001c                   : systick.obj (.text:SysTickIntRegister)
+                  00001930    00000018                   : gpio.obj (.text:GPIOIntRegister)
+                  00001948    00000018                   : gpio.obj (.text:GPIOPinTypeGPIOOutput)
+                  00001960    00000014                   : systick.obj (.text:SysTickEnable)
+                  00001974    00000014                   : systick.obj (.text:SysTickIntDisable)
+                  00001988    00000014                   : systick.obj (.text:SysTickIntEnable)
+                  0000199c    00000012                   : gpio.obj (.text:GPIOPinTypeGPIOInput)
+                  000019ae    00000010                   : interrupt.obj (.text:IntMasterEnable)
+                  000019be    00000002     --HOLE-- [fill = 0]
+                  000019c0    00000010                   : systick.obj (.text:SysTickPeriodSet)
+                  000019d0    0000000e                   : gpio.obj (.text:GPIOIntDisable)
+                  000019de    0000000e                   : gpio.obj (.text:GPIOIntStatus)
+                  000019ec    0000000e                   : timer.obj (.text:TimerEnable)
+                  000019fa    0000000c                   : cpu.obj (.text:CPUcpsie)
+                  00001a06    0000000c                   : gpio.obj (.text:GPIOIntEnable)
+                  00001a12    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init)
+                  00001a1e    0000000c     tm4c1231h6pm_startup_ccs.obj (.text)
+                  00001a2a    00000008     main.obj (.text)
+                  00001a32    00000006     driverlib.lib : gpio.obj (.text:GPIOIntClear)
+                  00001a38    00000006                   : gpio.obj (.text:GPIOPinWrite)
+                  00001a3e    00000006                   : sysctl.obj (.text:SysCtlDelay)
+                  00001a44    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  00001a48    00000004                                   : exit.c.obj (.text:abort:abort)
+
+.const     0    00001a4c    00000a5d     
+                  00001a4c    000001f8     bitmaps.obj (.const:.string:Buttons)
+                  00001c44    000001f8     bitmaps.obj (.const:.string:Menu1_full)
+                  00001e3c    000001f8     bitmaps.obj (.const:.string:Menu2_full)
+                  00002034    000001e5     Nokia5110.obj (.const:ASCII)
+                  00002219    00000003     --HOLE-- [fill = 0]
+                  0000221c    000000d8     driverlib.lib : gpio.obj (.const:g_ppui32GPIOIntMapSnowflake)
+                  000022f4    000000c0                   : gpio.obj (.const:g_ppui32GPIOIntMapBlizzard)
+                  000023b4    00000070                   : interrupt.obj (.const)
+                  00002424    0000006c                   : sysctl.obj (.const:g_pui32Xtals)
+                  00002490    0000000c     Nokia5110.obj (.const:MIX_SIMBOLS)
+                  0000249c    00000008     Nokia5110.obj (.const:.string:Masks)
+                  000024a4    00000005     Nokia5110.obj (.const:SPECIAL_SIMBOLS)
+
+.cinit     0    000024b0    00000024     
+                  000024b0    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  000024b8    00000008     (.cinit..vtable.load) [load image, compression = zero_init]
+                  000024c0    00000004     (__TI_handler_table)
+                  000024c4    00000010     (__TI_cinit_table)
+
+.init_array 
+*          0    00000000    00000000     UNINITIALIZED
+
+.vtable    0    20000000    0000026c     UNINITIALIZED
+                  20000000    0000026c     driverlib.lib : interrupt.obj (.vtable)
+
+.bss       0    2000026c    00000209     UNINITIALIZED
+                  2000026c    000001f8     (.common:Screen)
+                  20000464    00000004     (.common:G_selec_x)
+                  20000468    00000004     (.common:G_selec_y)
+                  2000046c    00000001     (.common:G_cursor_x)
+                  2000046d    00000001     (.common:G_cursor_y)
+                  2000046e    00000001     (.common:G_linhaInst)
+                  2000046f    00000001     (.common:G_modo)
+                  20000470    00000001     (.common:G_mux)
+                  20000471    00000001     (.common:G_player)
+                  20000472    00000001     (.common:G_posmenu)
+                  20000473    00000001     (.common:G_vit)
+                  20000474    00000001     (.common:debouncer)
+
+.stack     0    20000478    00000200     UNINITIALIZED
+                  20000478    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.stack)
+                  2000047c    000001fc     --HOLE--
+
+MODULE SUMMARY
+
+       Module                         code   ro data   rw data
+       ------                         ----   -------   -------
+    ./
+       Nokia5110.obj                  3108   510       504    
+       bitmaps.obj                    0      1512      0      
+       jogo.obj                       1160   0         0      
+       tm4c1231h6pm_startup_ccs.obj   12     620       0      
+       main.obj                       8      0         17     
+    +--+------------------------------+------+---------+---------+
+       Total:                         4288   2642      521    
+                                                              
+    /home/thiago/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib
+       gpio.obj                       620    408       0      
+       interrupt.obj                  172    112       620    
+       sysctl.obj                     630    108       0      
+       systick.obj                    104    0         0      
+       timer.obj                      14     0         0      
+       cpu.obj                        12     0         0      
+    +--+------------------------------+------+---------+---------+
+       Total:                         1552   628       620    
+                                                              
+    /home/thiago/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.3.LTS/lib/rtsv7M4_T_le_v4SPD16_eabi.lib
+       memset_t2.asm.obj              122    0         0      
+       autoinit.c.obj                 68     0         0      
+       boot_cortex_m.c.obj            52     0         0      
+       copy_zero_init.c.obj           12     0         0      
+       exit.c.obj                     4      0         0      
+       pre_init.c.obj                 4      0         0      
+    +--+------------------------------+------+---------+---------+
+       Total:                         262    0         0      
+                                                              
+       Stack:                         0      0         512    
+       Linker Generated:              0      36        0      
+    +--+------------------------------+------+---------+---------+
+       Grand Total:                   6102   3306      1653   
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 000024c4 records: 2, size/record: 8, table size: 16
+	.bss: load addr=000024b0, load size=00000008 bytes, run addr=2000026c, run size=00000209 bytes, compression=zero_init
+	.vtable: load addr=000024b8, load size=00000008 bytes, run addr=20000000, run size=0000026c bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 000024c0 records: 1, size/record: 4, table size: 4
+	index: 0, handler: __TI_zero_init
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address   name                          
+-------   ----                          
+00001a4c  Buttons                       
+00001a49  C$$EXIT                       
+000019fb  CPUcpsie                      
+000018e9  GPIODirModeSet                
+00001a33  GPIOIntClear                  
+000019d1  GPIOIntDisable                
+00001a07  GPIOIntEnable                 
+00001931  GPIOIntRegister               
+000019df  GPIOIntStatus                 
+00001735  GPIOIntTypeSet                
+00001319  GPIOPadConfigSet              
+0000199d  GPIOPinTypeGPIOInput          
+00001949  GPIOPinTypeGPIOOutput         
+00001a39  GPIOPinWrite                  
+2000046c  G_cursor_x                    
+2000046d  G_cursor_y                    
+2000046e  G_linhaInst                   
+2000046f  G_modo                        
+20000470  G_mux                         
+20000471  G_player                      
+20000472  G_posmenu                     
+20000464  G_selec_x                     
+20000468  G_selec_y                     
+20000473  G_vit                         
+000016cd  IntEnable                     
+000019af  IntMasterEnable               
+0000184d  IntRegister                   
+0000249c  Masks                         
+00001c44  Menu1_full                    
+00001e3c  Menu2_full                    
+000006f9  Nokia5110_Clear               
+000009c1  Nokia5110_ClearBuffer         
+000009f5  Nokia5110_ClrPxl              
+000006b9  Nokia5110_Cursor              
+000009eb  Nokia5110_DisplayBuffer       
+00000d99  Nokia5110_DrawChar            
+00000729  Nokia5110_DrawFullImage       
+00000e03  Nokia5110_DrawMix             
+00000dd1  Nokia5110_DrawSpecial         
+000002db  Nokia5110_Init                
+00000763  Nokia5110_MyDrawing           
+000003f5  Nokia5110_OutChar             
+00000c7b  Nokia5110_OutCharInv          
+00000ab5  Nokia5110_OutDec              
+00000d51  Nokia5110_OutSpecial          
+00000435  Nokia5110_OutString           
+00000d0d  Nokia5110_OutStringInv        
+00000461  Nokia5110_OutUDec             
+00000e7b  Nokia5110_Padding             
+000007dd  Nokia5110_PrintBMP            
+00000665  Nokia5110_SetCursor           
+00000a1b  Nokia5110_SetPxl              
+00000a41  PLL_Init                      
+00001a1f  ResetISR                      
+2000026c  Screen                        
+0000144d  SysCtlClockGet                
+0000155d  SysCtlClockSet                
+00001a3f  SysCtlDelay                   
+00001881  SysCtlPeripheralEnable        
+00001815  SysCtlPeripheralReady         
+00001961  SysTickEnable                 
+00001975  SysTickIntDisable             
+00001989  SysTickIntEnable              
+00001915  SysTickIntRegister            
+000019c1  SysTickPeriodSet              
+000019ed  TimerEnable                   
+20000678  __STACK_END                   
+00000200  __STACK_SIZE                  
+20000678  __STACK_TOP                   
+000024c4  __TI_CINIT_Base               
+000024d4  __TI_CINIT_Limit              
+000024c0  __TI_Handler_Table_Base       
+000024c4  __TI_Handler_Table_Limit      
+000017d1  __TI_auto_init_nobinit_nopinit
+ffffffff  __TI_pprof_out_hndl           
+ffffffff  __TI_prof_data_size           
+ffffffff  __TI_prof_data_start          
+00000000  __TI_static_base__            
+00001a13  __TI_zero_init                
+00001651  __aeabi_memclr                
+00001651  __aeabi_memclr4               
+00001651  __aeabi_memclr8               
+00001653  __aeabi_memset                
+00001653  __aeabi_memset4               
+00001653  __aeabi_memset8               
+ffffffff  __binit__                     
+ffffffff  __c_args__                    
+UNDEFED   __mpu_init                    
+20000478  __stack                       
+000018b5  _c_int00_noargs               
+UNDEFED   _system_post_cinit            
+00001a45  _system_pre_init              
+00001a49  abort                         
+ffffffff  binit                         
+20000474  debouncer                     
+20000000  g_pfnRAMVectors               
+00000000  g_pfnVectors                  
+00001a2b  main                          
+00001659  memset                        
+00000e91  start                         
+00001061  trataGPIOF                    
+000012a3  trataSysTick                  
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address   name                          
+-------   ----                          
+00000000  __TI_static_base__            
+00000000  g_pfnVectors                  
+00000200  __STACK_SIZE                  
+000002db  Nokia5110_Init                
+000003f5  Nokia5110_OutChar             
+00000435  Nokia5110_OutString           
+00000461  Nokia5110_OutUDec             
+00000665  Nokia5110_SetCursor           
+000006b9  Nokia5110_Cursor              
+000006f9  Nokia5110_Clear               
+00000729  Nokia5110_DrawFullImage       
+00000763  Nokia5110_MyDrawing           
+000007dd  Nokia5110_PrintBMP            
+000009c1  Nokia5110_ClearBuffer         
+000009eb  Nokia5110_DisplayBuffer       
+000009f5  Nokia5110_ClrPxl              
+00000a1b  Nokia5110_SetPxl              
+00000a41  PLL_Init                      
+00000ab5  Nokia5110_OutDec              
+00000c7b  Nokia5110_OutCharInv          
+00000d0d  Nokia5110_OutStringInv        
+00000d51  Nokia5110_OutSpecial          
+00000d99  Nokia5110_DrawChar            
+00000dd1  Nokia5110_DrawSpecial         
+00000e03  Nokia5110_DrawMix             
+00000e7b  Nokia5110_Padding             
+00000e91  start                         
+00001061  trataGPIOF                    
+000012a3  trataSysTick                  
+00001319  GPIOPadConfigSet              
+0000144d  SysCtlClockGet                
+0000155d  SysCtlClockSet                
+00001651  __aeabi_memclr                
+00001651  __aeabi_memclr4               
+00001651  __aeabi_memclr8               
+00001653  __aeabi_memset                
+00001653  __aeabi_memset4               
+00001653  __aeabi_memset8               
+00001659  memset                        
+000016cd  IntEnable                     
+00001735  GPIOIntTypeSet                
+000017d1  __TI_auto_init_nobinit_nopinit
+00001815  SysCtlPeripheralReady         
+0000184d  IntRegister                   
+00001881  SysCtlPeripheralEnable        
+000018b5  _c_int00_noargs               
+000018e9  GPIODirModeSet                
+00001915  SysTickIntRegister            
+00001931  GPIOIntRegister               
+00001949  GPIOPinTypeGPIOOutput         
+00001961  SysTickEnable                 
+00001975  SysTickIntDisable             
+00001989  SysTickIntEnable              
+0000199d  GPIOPinTypeGPIOInput          
+000019af  IntMasterEnable               
+000019c1  SysTickPeriodSet              
+000019d1  GPIOIntDisable                
+000019df  GPIOIntStatus                 
+000019ed  TimerEnable                   
+000019fb  CPUcpsie                      
+00001a07  GPIOIntEnable                 
+00001a13  __TI_zero_init                
+00001a1f  ResetISR                      
+00001a2b  main                          
+00001a33  GPIOIntClear                  
+00001a39  GPIOPinWrite                  
+00001a3f  SysCtlDelay                   
+00001a45  _system_pre_init              
+00001a49  C$$EXIT                       
+00001a49  abort                         
+00001a4c  Buttons                       
+00001c44  Menu1_full                    
+00001e3c  Menu2_full                    
+0000249c  Masks                         
+000024c0  __TI_Handler_Table_Base       
+000024c4  __TI_CINIT_Base               
+000024c4  __TI_Handler_Table_Limit      
+000024d4  __TI_CINIT_Limit              
+20000000  g_pfnRAMVectors               
+2000026c  Screen                        
+20000464  G_selec_x                     
+20000468  G_selec_y                     
+2000046c  G_cursor_x                    
+2000046d  G_cursor_y                    
+2000046e  G_linhaInst                   
+2000046f  G_modo                        
+20000470  G_mux                         
+20000471  G_player                      
+20000472  G_posmenu                     
+20000473  G_vit                         
+20000474  debouncer                     
+20000478  __stack                       
+20000678  __STACK_END                   
+20000678  __STACK_TOP                   
+ffffffff  __TI_pprof_out_hndl           
+ffffffff  __TI_prof_data_size           
+ffffffff  __TI_prof_data_start          
+ffffffff  __binit__                     
+ffffffff  __c_args__                    
+ffffffff  binit                         
+UNDEFED   __mpu_init                    
+UNDEFED   _system_post_cinit            
+
+[102 symbols]

@@ -1,0 +1,1 @@
+"./Nokia5110.obj" "./bitmaps.obj" "./jogo.obj" "./main.obj" "./tm4c1231h6pm_startup_ccs.obj" "/home/thiago/ti/TivaWare_C_Series-2.1.4.178/driverlib/ccs/Debug/driverlib.lib" "../tm4c1231h6pm.cmd" -llibc.a 

@@ -7,8 +7,8 @@
 #define MODO_VITO 3
 
 // Para limitar os valores de G_posmenu e G_linhaInst
-#define MENU_MAX 8
-#define INST_MAX 1
+#define MENU_MAX 1
+#define INST_MAX 8
 
 pedra_s pedras[24];
 
@@ -49,7 +49,7 @@ static void habInt(){
     IntMasterEnable();
 }
 
-
+//Configure SysTick timer that refreshes the screen
 static void configTimer(){
     uint32_t delay = SysCtlClockGet()/10;
 
@@ -79,7 +79,6 @@ static void limpaMatriz(){
 
 // Multiplexa os botoes da matriz de botoes. PF4 nao eh multiplexado pois nao eh utilizado.
 static void MUXButtons(){
-    limpaMatriz();
     switch (G_mux){
     case 1:
         limpaMatriz();
@@ -98,14 +97,16 @@ static void MUXButtons(){
     G_mux++;
 }
 
-//
+// Prints the right image at the menu
 static void printTelainicio(){
     Nokia5110_Clear();
     if(G_posmenu==0) Nokia5110_DrawFullImage(Menu1_full);
     if(G_posmenu==1) Nokia5110_DrawFullImage(Menu2_full);
 }
 
-//
+
+
+// Prints intruction pages
 static void printInstrucoes(){
     switch(G_linhaInst){
     	case 0:
@@ -262,4 +263,116 @@ void trataSysTick(){
             break;
     }
     if(debouncer>0)debouncer--;
+}
+
+
+// Function to reset values from pieces
+static void resetPieces(){
+    uint8_t i;
+    for(i=0;i<12;i++){
+        pedras[i].player=1;
+        pedras[i].dama=false;
+        pedras[i].life=true;
+    }
+    for(i=12;i<24;i++){
+        pedras[i].player=2;
+        pedras[i].dama=false;
+        pedras[i].life=true;
+    }
+    for (i=0;i<4;i++){
+        pedras[i].x=1+2*i;
+        pedras[i].y=7;
+    }
+    for (i=0;i<4;i++){
+        pedras[i+4].x=2*i;
+        pedras[i+4].y=6;
+    }
+    for (i=0;i<4;i++){
+        pedras[i+8].x=1+2*i;
+        pedras[i+8].y=5;
+    }
+    for (i=0;i<4;i++){
+        pedras[i+12].x=2*i;
+        pedras[i+12].y=2;
+    }
+    for (i=0;i<4;i++){
+        pedras[i+16].x=1+2*i;
+        pedras[i+16].y=1;
+    }
+    for (i=0;i<4;i++){
+        pedras[i+20].x=2*i;
+        pedras[i+20].y=0;
+    }
+}
+
+static void printPieces(){
+    uint8_t i;
+    for(i=0;i<24;i++){
+        if(pedras[i].)
+    }
+}
+
+// Functions to print player 1 and 2 pieces, and ther inverted colors
+static void printP1(uint8_t x, uint8_t y){
+    uint8_t init_x=35+x*6, init_y=y*6;
+    Nokia5110_SetPxl(init_y+1,init_x+1);
+    Nokia5110_SetPxl(init_y+1,init_x+4);
+    Nokia5110_SetPxl(init_y+2,init_x+2);
+    Nokia5110_SetPxl(init_y+2,init_x+3);
+    Nokia5110_SetPxl(init_y+3,init_x+2);
+    Nokia5110_SetPxl(init_y+3,init_x+3);
+    Nokia5110_SetPxl(init_y+4,init_x+1);
+    Nokia5110_SetPxl(init_y+4,init_x+4);
+}
+static void printP1Inv(uint8_t x, uint8_t y){
+    uint8_t init_x=35+x*6, init_y=y*6, i,j;
+    for(i=init_y;i<init_y+6;i++){
+        for(j=init_x;j<init_x;j++){
+            Nokia5110_SetPxl(i,j);
+        }
+    }
+    Nokia5110_ClrPxl(init_y+1,init_x+1);
+    Nokia5110_ClrPxl(init_y+1,init_x+4);
+    Nokia5110_ClrPxl(init_y+2,init_x+2);
+    Nokia5110_ClrPxl(init_y+2,init_x+3);
+    Nokia5110_ClrPxl(init_y+3,init_x+2);
+    Nokia5110_ClrPxl(init_y+3,init_x+3);
+    Nokia5110_ClrPxl(init_y+4,init_x+1);
+    Nokia5110_ClrPxl(init_y+4,init_x+4);
+}
+
+static void printP2(uint8_t x, uint8_t y){
+    uint8_t init_x=35+x*6, init_y=y*6;
+    Nokia5110_SetPxl(init_y+1,init_x+2);
+    Nokia5110_SetPxl(init_y+1,init_x+3);
+    Nokia5110_SetPxl(init_y+2,init_x+1);
+    Nokia5110_SetPxl(init_y+2,init_x+2);
+    Nokia5110_SetPxl(init_y+2,init_x+3);
+    Nokia5110_SetPxl(init_y+2,init_x+4);
+    Nokia5110_SetPxl(init_y+3,init_x+1);
+    Nokia5110_SetPxl(init_y+3,init_x+2);
+    Nokia5110_SetPxl(init_y+3,init_x+3);
+    Nokia5110_SetPxl(init_y+3,init_x+4);
+    Nokia5110_SetPxl(init_y+4,init_x+2);
+    Nokia5110_SetPxl(init_y+4,init_x+3);
+}
+static void printP2Inv(uint8_t x, uint8_t y){
+    uint8_t init_x=35+x*6, init_y=y*6,i,j;
+    for(i=init_y;i<init_y+6;i++){
+        for(j=init_x;j<init_x;j++){
+            Nokia5110_SetPxl(i,j);
+        }
+    }
+    Nokia5110_ClrPxl(init_y+1,init_x+2);
+    Nokia5110_ClrPxl(init_y+1,init_x+3);
+    Nokia5110_ClrPxl(init_y+2,init_x+1);
+    Nokia5110_ClrPxl(init_y+2,init_x+2);
+    Nokia5110_ClrPxl(init_y+2,init_x+3);
+    Nokia5110_ClrPxl(init_y+2,init_x+4);
+    Nokia5110_ClrPxl(init_y+3,init_x+1);
+    Nokia5110_ClrPxl(init_y+3,init_x+2);
+    Nokia5110_ClrPxl(init_y+3,init_x+3);
+    Nokia5110_ClrPxl(init_y+3,init_x+4);
+    Nokia5110_ClrPxl(init_y+4,init_x+2);
+    Nokia5110_ClrPxl(init_y+4,init_x+3);
 }

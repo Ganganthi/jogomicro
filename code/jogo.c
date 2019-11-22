@@ -7,7 +7,7 @@
 #define MODO_VITO 3
 
 // Para limitar os valores de G_posmenu e G_linhaInst
-#define MENU_MAX 1
+#define MENU_MAX 8
 #define INST_MAX 1
 
 pedra_s pedras[24];
@@ -107,14 +107,43 @@ static void printTelainicio(){
 
 //
 static void printInstrucoes(){
-    Nokia5110_Clear();
-    Nokia5110_DrawFullImage(Buttons);
+    switch(G_linhaInst){
+    	case 0:
+    		Nokia5110_DrawFullImage(Buttons);
+    		break;
+		case 1:
+			Nokia5110_DrawFullImage(Inst1);
+			break;
+		case 2:
+			Nokia5110_DrawFullImage(Inst2);
+			break;
+		case 3:
+			Nokia5110_DrawFullImage(Inst3);
+			break;
+		case 4:
+			Nokia5110_DrawFullImage(Inst4);
+			break;
+		case 5:
+			Nokia5110_DrawFullImage(Inst5);
+			break;
+		case 6:
+			Nokia5110_DrawFullImage(Inst6);
+			break;
+		case 7:
+			Nokia5110_DrawFullImage(Inst7);
+			break;
+		case 8:
+			Nokia5110_DrawFullImage(Inst8);
+			break;
+    }
 }
 
 // ISR dos botoes da matriz
 void trataGPIOF(){
     if(debouncer>0)return;
     const uint8_t tempo=5;
+
+    // left arrow
     if ((GPIOIntStatus(GPIO_PORTF_BASE, true) & GPIO_INT_PIN_0) == GPIO_INT_PIN_0)
     {
         debouncer=tempo;
@@ -126,6 +155,8 @@ void trataGPIOF(){
             GPIOIntDisable(GPIO_PORTF_BASE,GPIO_INT_PIN_0);
         }
     }
+
+    // up and down arrows
     if ((GPIOIntStatus(GPIO_PORTF_BASE, true) & GPIO_INT_PIN_1) == GPIO_INT_PIN_1)
     {
         debouncer=tempo;
@@ -149,7 +180,7 @@ void trataGPIOF(){
                     if(G_posmenu<MENU_MAX) G_posmenu++;
                     break;
                 case MODO_INST:
-                    if(G_linhaInst<INST_MAX) G_linhaInst--;
+                    if(G_linhaInst<INST_MAX) G_linhaInst++;
                     break;
                 case MODO_JOGO:
                     if(G_cursor_y == 7) G_cursor_x = 0;
@@ -158,6 +189,8 @@ void trataGPIOF(){
             }       
         }
     }
+
+    // right arrow
     if ((GPIOIntStatus(GPIO_PORTF_BASE, true) & GPIO_INT_PIN_2) == GPIO_INT_PIN_2)
     {
         debouncer=tempo;
@@ -168,8 +201,9 @@ void trataGPIOF(){
                 else G_cursor_x++;
             }
         }
-
     }
+
+    // ok button (select button)
     if ((GPIOIntStatus(GPIO_PORTF_BASE, true) & GPIO_INT_PIN_3) == GPIO_INT_PIN_3)
     {
         debouncer=tempo;

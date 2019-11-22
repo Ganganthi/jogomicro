@@ -653,3 +653,10 @@ void Nokia5110_Padding()
 {
     lcddatawrite(0x00);
 }
+
+
+void Nokia5110_BufferFullImage(const uint8_t *ptr){
+	int i;
+	for(i = 0; i < (MAX_X * MAX_Y / 8); i = i + 1)
+	        Screen[i]=ptr[i];
+}

@@ -177,6 +177,9 @@ void Nokia5110_DrawSpecial      (uint16_t code);
 void Nokia5110_DrawMix          (uint8_t code1, uint8_t code2, uint8_t code3, uint8_t code4);
 void Nokia5110_Padding          (void);
 
+// My new function
+void Nokia5110_BufferFullImage  (const uint8_t *ptr);
+
 
 
 #endif

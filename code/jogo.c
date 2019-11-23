@@ -256,7 +256,7 @@ void trataSysTick(){
             printInstrucoes();
             break;
         case MODO_JOGO:
-        //coisa pra fazer
+            printJogo();
             break;
         case MODO_VITO:
         //coisa pra fazer
@@ -305,10 +305,14 @@ static void resetPieces(){
     }
 }
 
+//Function to print game Pieces
 static void printPieces(){
     uint8_t i;
     for(i=0;i<24;i++){
-        if(pedras[i].)
+        if(pedras[i].life==true){
+            if(pedras[i].player==1)printP1(pedras[i].x,pedras[i].y);
+            if(pedras[i].player==2)printP2(pedras[i].x,pedras[i].y);
+        }
     }
 }
 
@@ -327,7 +331,7 @@ static void printP1(uint8_t x, uint8_t y){
 static void printP1Inv(uint8_t x, uint8_t y){
     uint8_t init_x=35+x*6, init_y=y*6, i,j;
     for(i=init_y;i<init_y+6;i++){
-        for(j=init_x;j<init_x;j++){
+        for(j=init_x;j<init_x+6;j++){
             Nokia5110_SetPxl(i,j);
         }
     }
@@ -359,7 +363,7 @@ static void printP2(uint8_t x, uint8_t y){
 static void printP2Inv(uint8_t x, uint8_t y){
     uint8_t init_x=35+x*6, init_y=y*6,i,j;
     for(i=init_y;i<init_y+6;i++){
-        for(j=init_x;j<init_x;j++){
+        for(j=init_x;j<init_x+6;j++){
             Nokia5110_SetPxl(i,j);
         }
     }
@@ -376,3 +380,84 @@ static void printP2Inv(uint8_t x, uint8_t y){
     Nokia5110_ClrPxl(init_y+4,init_x+2);
     Nokia5110_ClrPxl(init_y+4,init_x+3);
 }
+
+// Print functions to use with cursor
+static void printFull(uint8_t x, uint8_t y){
+    uint8_t init_x=35+x*6, init_y=y*6,i,j;
+    for(i=init_y;i<init_y+6;i++){
+        for(j=init_x;j<init_x+6;j++){
+            Nokia5110_SetPxl(i,j);
+        }
+    }
+}
+static void printBlank(uint8_t x, uint8_t y){
+    uint8_t init_x=35+x*6, init_y=y*6,i,j;
+    for(i=init_y;i<init_y+6;i++){
+        for(j=init_x;j<init_x+6;j++){
+            Nokia5110_ClrPxl(i,j);
+        }
+    }
+}
+
+
+// Function to print 
+static void printJogo(){
+    static int vez=0;
+    Nokia5110_ClearBuffer();
+    if (G_player==1){
+        Nokia5110_BufferFullImage(JogoPlayer1);
+    }else if (G_player==2){
+        Nokia5110_BufferFullImage(JogoPlayer2);
+    }
+    printPieces();
+    int aux = checkSpace(G_cursor_x,G_cursor_y);
+    switch(aux){
+        case 0:
+            if(vez==0)printFull(G_cursor_x,G_cursor_y);
+            else if(vez==1)printBlank(G_cursor_x,G_cursor_y);
+            break;
+        case 1:
+            if(vez==0)printP1(G_cursor_x,G_cursor_y);
+            else if(vez==1)printP1Inv(G_cursor_x,G_cursor_y);
+            break;
+        case 2:
+            if(vez==0)printP2(G_cursor_x,G_cursor_y);
+            else if(vez==1)printP2Inv(G_cursor_x,G_cursor_y);
+            break;
+    }
+    if(G_selec_x!=-1 && G_selec_y!=-1){
+       switch(G_player){
+        case 1:
+            if(vez==0)printP1(G_selec_x,G_selec_y);
+            else if(vez==1)printP1Inv(G_selec_x,G_selec_y);
+            break;
+        case 2:
+            if(vez==0)printP2(G_selec_x,G_selec_y);
+            else if(vez==1)printP2Inv(G_selec_x,G_selec_y);
+            break;
+        } 
+    }
+    if(vez==0)vez=1;
+    else if(vez==1)vez=0;
+    Nokia5110_DisplayBuffer();
+}
+
+
+// Function to know if cursor is at a blank or occupied space
+// Returns the player number if at a piece, 0 if at a blank space
+static int checkSpace(uint8_t x,uint8_t y){
+    uint8_t i;
+    for(i=0;i<24;i++)if(pedras[i].x==x && pedras[i].y==y)return pedras[i].player;
+    return 0;
+}
+
+
+/*
+    To do:
+
+    definir o tempo de espera entre piscadas do cursor e selec.
+
+
+
+
+*/

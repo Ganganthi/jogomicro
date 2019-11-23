@@ -63,4 +63,12 @@ static void printP1Inv(uint8_t x, uint8_t y);
 static void printP2(uint8_t x, uint8_t y);
 static void printP2Inv(uint8_t x, uint8_t y);
 
+static void printFull(uint8_t x, uint8_t y);
+static void printBlank(uint8_t x, uint8_t y);
+
+static void printJogo();
+
+static int checkSpace(uint8_t x,uint8_t y);
+
+
 #endif

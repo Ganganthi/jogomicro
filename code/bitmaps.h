@@ -21,7 +21,8 @@ extern const uint8_t Inst6[];
 extern const uint8_t Inst7[];
 extern const uint8_t Inst8[];
 
-
+extern const uint8_t JogoPlayer1[];
+extern const uint8_t JogoPlayer2[];
 
 
 

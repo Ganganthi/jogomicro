@@ -22,11 +22,11 @@
 
 typedef struct pedra
 {
-	uint8_t x;
-	uint8_t y;
-	uint8_t player;
-	bool dama;
-	bool life;
+	uint8_t x;			// 0-7 if alive, 10 if dead
+	uint8_t y;			// 0-7 if alive, 10 if dead
+	uint8_t player;		// 1 if player 1, 2 if player 2
+	bool dama;			// false if not, true if is
+	bool life;			// false if dead, true if alive
 
 }pedra_s;
 
@@ -70,7 +70,10 @@ static void printBlank(uint8_t x, uint8_t y);
 
 static void printJogo();
 
-static int checkSpace(uint8_t x,uint8_t y);
+static int checkSpace(int x,int y);
 
+static int checkMove();
+
+static bool canCapture();
 
 #endif

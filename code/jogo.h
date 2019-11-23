@@ -49,6 +49,8 @@ static void printTelainicio();
 
 static void printInstrucoes();
 
+void trataTimer0();
+
 void trataGPIOF();
 
 void trataSysTick();

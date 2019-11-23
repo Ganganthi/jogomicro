@@ -35,7 +35,8 @@ static void habPerifericos(){
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB));
-    
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0));
 }
 
 // Habilita interrupt dos botoes da matriz
@@ -43,6 +44,7 @@ static void habInt(){
 	GPIOIntDisable(GPIO_PORTF_BASE, GPIO_INT_PIN_0 | GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3);
     GPIOIntClear(GPIO_PORTF_BASE, GPIO_INT_PIN_0 | GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3);
     GPIOIntRegister(GPIO_PORTF_BASE,trataGPIOF);
+    IntPrioritySet(INT_GPIOF,0);
     GPIOIntTypeSet(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_FALLING_EDGE);
     GPIOIntEnable(GPIO_PORTF_BASE, GPIO_INT_PIN_0 | GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3);
 
@@ -52,6 +54,14 @@ static void habInt(){
 //Configure SysTick timer that refreshes the screen
 static void configTimer(){
     uint32_t delay = SysCtlClockGet()/10;
+
+    TimerIntDisable(TIMER0_BASE,TIMER_TIMA_TIMEOUT);
+    TimerConfigure(TIMER0_BASE,TIMER_CFG_PERIODIC);
+    TimerLoadSet(TIMER0_BASE,TIMER_A,SysCtlClockGet()/7);
+    TimerIntRegister(TIMER0_BASE,TIMER_A,trataTimer0);
+    IntPrioritySet(INT_TIMER0A,1);
+    TimerIntEnable(TIMER0_BASE,TIMER_TIMA_TIMEOUT);
+    TimerEnable(TIMER0_BASE,TIMER_A);
 
     SysTickIntDisable();
     SysTickPeriodSet(delay);
@@ -139,6 +149,12 @@ static void printInstrucoes(){
     }
 }
 
+// ISR do timer de MUX
+void trataTimer0(){
+    TimerIntClear(TIMER0_BASE,TIMER_TIMA_TIMEOUT);
+    MUXButtons();
+}
+
 // ISR dos botoes da matriz
 void trataGPIOF(){
     if(debouncer>0)return;
@@ -152,8 +168,6 @@ void trataGPIOF(){
         if(G_mux==2){
             if(G_cursor_x == 0) G_cursor_x = 7;
             else G_cursor_x--;
-            TimerEnable(TIMER0_BASE,TIMER_A);
-            GPIOIntDisable(GPIO_PORTF_BASE,GPIO_INT_PIN_0);
         }
     }
 
@@ -220,6 +234,7 @@ void trataGPIOF(){
                         G_selec_y=-1;
                         G_player=1;
                         G_vit=0;
+                        resetPieces();
                     }else if(G_posmenu==1){
                         G_modo=MODO_INST;
                         G_linhaInst=0;
@@ -245,9 +260,8 @@ void trataGPIOF(){
 }
 
 
-// ISR de MUX e refresh de tela
+// ISR de refresh de tela
 void trataSysTick(){
-    MUXButtons();
     switch (G_modo){
         case MODO_MENU:
             printTelainicio();
@@ -318,7 +332,7 @@ static void printPieces(){
 
 // Functions to print player 1 and 2 pieces, and ther inverted colors
 static void printP1(uint8_t x, uint8_t y){
-    uint8_t init_x=35+x*6, init_y=y*6;
+    uint8_t init_x=36+x*6, init_y=y*6;
     Nokia5110_SetPxl(init_y+1,init_x+1);
     Nokia5110_SetPxl(init_y+1,init_x+4);
     Nokia5110_SetPxl(init_y+2,init_x+2);
@@ -329,7 +343,7 @@ static void printP1(uint8_t x, uint8_t y){
     Nokia5110_SetPxl(init_y+4,init_x+4);
 }
 static void printP1Inv(uint8_t x, uint8_t y){
-    uint8_t init_x=35+x*6, init_y=y*6, i,j;
+    uint8_t init_x=36+x*6, init_y=y*6, i,j;
     for(i=init_y;i<init_y+6;i++){
         for(j=init_x;j<init_x+6;j++){
             Nokia5110_SetPxl(i,j);
@@ -346,7 +360,7 @@ static void printP1Inv(uint8_t x, uint8_t y){
 }
 
 static void printP2(uint8_t x, uint8_t y){
-    uint8_t init_x=35+x*6, init_y=y*6;
+    uint8_t init_x=36+x*6, init_y=y*6;
     Nokia5110_SetPxl(init_y+1,init_x+2);
     Nokia5110_SetPxl(init_y+1,init_x+3);
     Nokia5110_SetPxl(init_y+2,init_x+1);
@@ -361,7 +375,7 @@ static void printP2(uint8_t x, uint8_t y){
     Nokia5110_SetPxl(init_y+4,init_x+3);
 }
 static void printP2Inv(uint8_t x, uint8_t y){
-    uint8_t init_x=35+x*6, init_y=y*6,i,j;
+    uint8_t init_x=36+x*6, init_y=y*6,i,j;
     for(i=init_y;i<init_y+6;i++){
         for(j=init_x;j<init_x+6;j++){
             Nokia5110_SetPxl(i,j);
@@ -383,7 +397,7 @@ static void printP2Inv(uint8_t x, uint8_t y){
 
 // Print functions to use with cursor
 static void printFull(uint8_t x, uint8_t y){
-    uint8_t init_x=35+x*6, init_y=y*6,i,j;
+    uint8_t init_x=36+x*6, init_y=y*6,i,j;
     for(i=init_y;i<init_y+6;i++){
         for(j=init_x;j<init_x+6;j++){
             Nokia5110_SetPxl(i,j);
@@ -391,7 +405,7 @@ static void printFull(uint8_t x, uint8_t y){
     }
 }
 static void printBlank(uint8_t x, uint8_t y){
-    uint8_t init_x=35+x*6, init_y=y*6,i,j;
+    uint8_t init_x=36+x*6, init_y=y*6,i,j;
     for(i=init_y;i<init_y+6;i++){
         for(j=init_x;j<init_x+6;j++){
             Nokia5110_ClrPxl(i,j);
@@ -402,7 +416,7 @@ static void printBlank(uint8_t x, uint8_t y){
 
 // Function to print 
 static void printJogo(){
-    static int vez=0;
+    static int vez=0, cont=0;
     Nokia5110_ClearBuffer();
     if (G_player==1){
         Nokia5110_BufferFullImage(JogoPlayer1);
@@ -435,10 +449,13 @@ static void printJogo(){
             if(vez==0)printP2(G_selec_x,G_selec_y);
             else if(vez==1)printP2Inv(G_selec_x,G_selec_y);
             break;
-        } 
+        }
     }
-    if(vez==0)vez=1;
-    else if(vez==1)vez=0;
+    if(cont==0){
+        cont=2;
+        if(vez==0)vez=1;
+        else if(vez==1)vez=0;
+    }else cont--;
     Nokia5110_DisplayBuffer();
 }
 
